@@ -6,7 +6,7 @@ import { UserService } from 'src/app/services/user.service';
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css'],
-  providers:[UserService]
+  providers: [UserService]
 })
 export class SignUpComponent {
 
@@ -31,15 +31,22 @@ export class SignUpComponent {
 
   }
   addUser() {
-    if (!this.addUserForm.valid) {
-      return false;
+    if (this.id) {
+      for (let i = 0; i < this.users.length; i++) {
+        if (this.users[i].id == this.id) {
+          this.users[i] = this.user
+        }
+        
+      }
+      localStorage.setItem("users", JSON.stringify(this.users));
     } else {
-      return this.userService.createUser(this.addUserForm.value).subscribe(
+      
+      this.userService.createUser(this.user).subscribe(
         (data)=>{
           console.log(data.message);
           
         }
-      );
+      )
     }
 
   }
